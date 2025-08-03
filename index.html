@@ -1,0 +1,69 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RK Mobiles</title>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+  <h2>📱 RK Mobiles</h2>
+  <p>📍 Address: Mottanam Patti Road, Kaliyamman Kovil Opposite, Mettupatti</p>
+  <p>🚚 Home delivery available (Dindigul district only)</p>
+  <p>📞 Call/WhatsApp: <a href="https://wa.me/919025139916" target="_blank">9025139916</a></p>
+  <p>🛠️ Chip-level service available (Genuine, professional method)</p>
+
+  <hr/>
+
+  <form onsubmit="sendData(event)">
+    <label>👤 Your Name:<br/>
+      <input type="text" id="name" required />
+    </label><br/><br/>
+
+    <label>📞 Contact Number:<br/>
+      <input type="tel" id="phone" required />
+    </label><br/><br/>
+
+    <label>🏠 Address:<br/>
+      <textarea id="address" required></textarea>
+    </label><br/><br/>
+
+    <label>📱 Select Mobile Brand:<br/>
+      <select id="brand">
+        <option>Samsung</option><option>Realme</option><option>Oppo</option><option>Vivo</option><option>Redmi</option><option>iPhone</option>
+      </select>
+    </label><br/><br/>
+
+    <label>📱 Select Model:<br/>
+      <input type="text" id="model" required />
+    </label><br/><br/>
+
+    <label>🔒 Fingerprint Type:<br/>
+      <select id="fingerprint">
+        <option>Display</option>
+        <option>Side Fingerprint</option>
+        <option>Back Side Fingerprint</option>
+        <option>No Fingerprint</option>
+      </select>
+    </label><br/><br/>
+
+    <button type="submit">Send Request via WhatsApp</button>
+  </form>
+
+  <script>
+    function sendData(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+      const brand = document.getElementById('brand').value;
+      const model = document.getElementById('model').value;
+      const fingerprint = document.getElementById('fingerprint').value;
+
+      const message = `*New Mobile Service Request*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}\n📱 Brand: ${brand}\n📱 Model: ${model}\n🔒 Fingerprint: ${fingerprint}`;
+
+      const whatsappUrl = `https://wa.me/919025139916?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
