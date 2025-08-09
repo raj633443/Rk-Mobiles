@@ -1,53 +1,126 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RK Mobiles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: url('https://i.ibb.co/tMCQ9dz/rk-mobiles-card.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .content {
+      background-color: rgba(255, 255, 255, 0.94);
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+    }
+    .header {
+      background: linear-gradient(90deg, #000000, #ff9900);
+      color: white;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px 10px 0 0;
+      font-size: 20px;
+      font-weight: bold;
+      margin: -20px -25px 20px -25px;
+    }
+    p {
+      margin: 5px 0;
+      font-size: 15px;
+    }
+    label {
+      font-weight: bold;
+      font-size: 14px;
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-shadow: inset 0px 1px 3px rgba(0,0,0,0.1);
+      font-size: 14px;
+    }
+    textarea {
+      resize: none;
+      height: 60px;
+    }
+    button {
+      background-color: #ff9900;
+      color: black;
+      font-weight: bold;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background-color: #e68a00;
+      transform: scale(1.02);
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; padding: 20px;">
-  <h2>📱 RK Mobiles</h2>
-  <p>📍 Address: Mottanam Patti Road, Kaliyamman Kovil Opposite, Mettupatti</p>
-  <p>🚚 Home delivery available (Dindigul district only)</p>
-  <p>📞 Call/WhatsApp: <a href="https://wa.me/919025139916" target="_blank">9025139916</a></p>
-  <p>🛠️ Chip-level service available (Genuine, professional method)</p>
+<body>
+  <div class="content">
+    <div class="header">📱 RK Mobiles - Sales & Service</div>
+    <p>📍 Address: Mottanam Patti Road, Kaliyamman Kovil Opposite, Mettupatti</p>
+    <p>🚚 Home delivery available (Dindigul district only)</p>
+    <p>📞 Call/WhatsApp: <a href="https://wa.me/919025139916" target="_blank">9025139916</a></p>
+    <p>🛠️ Chip-level service available (Genuine, professional method)</p>
 
-  <hr/>
+    <hr/>
 
-  <form onsubmit="sendData(event)">
-    <label>👤 Your Name:<br/>
-      <input type="text" id="name" required />
-    </label><br/><br/>
+    <form onsubmit="sendData(event)">
+      <label>👤 Your Name:
+        <input type="text" id="name" placeholder="Enter your name" required />
+      </label>
 
-    <label>📞 Contact Number:<br/>
-      <input type="tel" id="phone" required />
-    </label><br/><br/>
+      <label>📞 Contact Number:
+        <input type="tel" id="phone" placeholder="Enter phone number" required />
+      </label>
 
-    <label>🏠 Address:<br/>
-      <textarea id="address" required></textarea>
-    </label><br/><br/>
+      <label>🏠 Address:
+        <textarea id="address" placeholder="Enter your full address" required></textarea>
+      </label>
 
-    <label>📱 Select Mobile Brand:<br/>
-      <select id="brand">
-        <option>Samsung</option><option>Realme</option><option>Oppo</option><option>Vivo</option><option>Redmi</option><option>iPhone</option>
-      </select>
-    </label><br/><br/>
+      <label>📱 Select Mobile Brand:
+        <select id="brand">
+          <option>Samsung</option>
+          <option>Realme</option>
+          <option>Oppo</option>
+          <option>Vivo</option>
+          <option>Redmi</option>
+          <option>iPhone</option>
+        </select>
+      </label>
 
-    <label>📱 Select Model:<br/>
-      <input type="text" id="model" required />
-    </label><br/><br/>
+      <label>📱 Select Model:
+        <input type="text" id="model" placeholder="Enter model name" required />
+      </label>
 
-    <label>🔒 Fingerprint Type:<br/>
-      <select id="fingerprint">
-        <option>Display</option>
-        <option>Side Fingerprint</option>
-        <option>Back Side Fingerprint</option>
-        <option>No Fingerprint</option>
-      </select>
-    </label><br/><br/>
+      <label>🔒 Fingerprint Type:
+        <select id="fingerprint">
+          <option>Display</option>
+          <option>Side Fingerprint</option>
+          <option>Back Side Fingerprint</option>
+          <option>No Fingerprint</option>
+        </select>
+      </label>
 
-    <button type="submit">Send Request via WhatsApp</button>
-  </form>
+      <button type="submit">📤 Send Request via WhatsApp</button>
+    </form>
+  </div>
 
   <script>
     function sendData(event) {
