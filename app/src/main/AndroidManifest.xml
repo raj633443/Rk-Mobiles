@@ -8,18 +8,22 @@
         android:label="RK Mobiles"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".ProfitLossActivity" />
         <activity android:name=".ExpenseActivity" />
         <activity android:name=".SaleActivity" />
         <activity android:name=".PendingActivity" />
+        <activity android:name=".AddRepairActivity" />
         <activity android:name=".RepairActivity" />
         <activity android:name=".StockActivity" />
+
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".ReminderReceiver" android:exported="false" />
     </application>
 </manifest>

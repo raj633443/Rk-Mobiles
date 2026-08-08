@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="18dp" android:layout_width="match_parent" android:layout_height="match_parent">
-<TextView android:text="Repairs" android:textSize="28sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<TextView android:text="Track repair customer, issue, cost and charge." android:layout_marginTop="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnAddRepair" android:text="Add Repair" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp"/>
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/bg" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="20dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Repairs" android:textColor="@color/rk_dark"
+            android:textSize="30sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="3dp" android:text="Manage customer repairs"
+            android:textColor="#6B7280" android:textSize="14sp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:background="@drawable/card_bg"
+            android:orientation="vertical" android:padding="20dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Repair service" android:textColor="#111827"
+                android:textSize="21sp" android:textStyle="bold" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Save customer, phone, model, issue, cost and charge in one place."
+                android:textColor="#6B7280" android:textSize="14sp" />
+            <Button android:id="@+id/btnAddRepair" android:layout_width="match_parent"
+                android:layout_height="58dp" android:layout_marginTop="18dp"
+                android:backgroundTint="@color/rk_blue"
+                android:text="+  Add New Repair" android:textColor="@color/white"
+                android:textSize="16sp" android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

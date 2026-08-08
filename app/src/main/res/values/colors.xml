@@ -4,10 +4,8 @@
     <color name="rk_blue">#1565C0</color>
     <color name="rk_dark">#0D47A1</color>
     <color name="white">#FFFFFF</color>
-
     <color name="bg">#F5F7FA</color>
     <color name="background">#F5F7FA</color>
-
     <color name="profit">#168A45</color>
     <color name="pending">#D32F2F</color>
 </resources>
