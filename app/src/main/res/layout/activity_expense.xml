@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="16dp"
+    android:background="@color/background" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:text="Expenses" android:textSize="25sp" android:textStyle="bold" android:textColor="@color/primary"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etTitle" android:hint="Expense Title" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etAmount" android:hint="Amount ₹" android:inputType="numberDecimal" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnAddExpense" android:text="Add Expense" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <ListView android:id="@+id/listExpense" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
+</LinearLayout>

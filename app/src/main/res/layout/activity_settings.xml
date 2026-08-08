@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="18dp"
+    android:background="@color/background" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:text="Settings" android:textSize="25sp" android:textStyle="bold" android:textColor="@color/primary"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/etNewPin" android:hint="New PIN" android:inputType="numberPassword" android:maxLength="6"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnSavePin" android:text="Change PIN" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnSetReminder" android:text="Set 10:00 AM Reminder" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
