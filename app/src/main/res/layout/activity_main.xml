@@ -4,74 +4,94 @@
     android:background="@color/bg" android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="20dp">
+        android:orientation="vertical" android:paddingStart="18dp" android:paddingTop="18dp"
+        android:paddingEnd="18dp" android:paddingBottom="24dp">
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="RK MOBILES" android:textColor="@color/rk_dark"
-            android:textSize="30sp" android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" android:text="Business Manager"
-            android:textColor="#6B7280" android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="22dp" android:text="Today overview"
-            android:textColor="#111827" android:textSize="20sp" android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvSummary"
+        <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:background="@drawable/card_bg"
-            android:lineSpacingExtra="5dp" android:padding="18dp"
-            android:text="Loading..." android:textColor="#111827" android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="22dp" android:text="Quick actions"
-            android:textColor="#111827" android:textSize="20sp" android:textStyle="bold" />
-
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:orientation="horizontal">
-            <Button android:id="@+id/btnStock" android:layout_width="0dp"
-                android:layout_height="64dp" android:layout_marginEnd="6dp"
-                android:layout_weight="1" android:backgroundTint="@color/rk_blue"
-                android:text="Stock" android:textColor="@color/white" android:textSize="14sp" />
-            <Button android:id="@+id/btnRepair" android:layout_width="0dp"
-                android:layout_height="64dp" android:layout_marginStart="6dp"
-                android:layout_weight="1" android:backgroundTint="@color/rk_dark"
-                android:text="Repairs" android:textColor="@color/white" android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:orientation="horizontal">
-            <Button android:id="@+id/btnPending" android:layout_width="0dp"
-                android:layout_height="64dp" android:layout_marginEnd="6dp"
-                android:layout_weight="1" android:backgroundTint="@color/pending"
-                android:text="Pending" android:textColor="@color/white" android:textSize="14sp" />
-            <Button android:id="@+id/btnSale" android:layout_width="0dp"
-                android:layout_height="64dp" android:layout_marginStart="6dp"
-                android:layout_weight="1" android:backgroundTint="@color/profit"
-                android:text="Add Sale" android:textColor="@color/white" android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:orientation="horizontal">
-            <Button android:id="@+id/btnExpense" android:layout_width="0dp"
-                android:layout_height="64dp" android:layout_marginEnd="6dp"
-                android:layout_weight="1" android:backgroundTint="#6B7280"
-                android:text="Expense" android:textColor="@color/white" android:textSize="14sp" />
-            <Button android:id="@+id/btnProfit" android:layout_width="0dp"
-                android:layout_height="64dp" android:layout_marginStart="6dp"
-                android:layout_weight="1" android:backgroundTint="#7C3AED"
-                android:text="Profit &amp; Loss" android:textColor="@color/white" android:textSize="14sp" />
+            android:background="@drawable/header_bg" android:orientation="vertical" android:padding="20dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="RK MOBILES" android:textColor="@color/white"
+                android:textSize="25sp" android:textStyle="bold" android:letterSpacing="0.04"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" android:text="Business Manager"
+                android:textColor="#DCEBFF" android:textSize="14sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" android:text="TODAY"
+                android:textColor="@color/white" android:textSize="12sp" android:textStyle="bold"/>
         </LinearLayout>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="18dp" android:layout_marginBottom="12dp"
-            android:text="Daily pending reminder • 10:00 AM"
-            android:textColor="#6B7280" android:textSize="13sp" />
+            android:layout_marginTop="20dp" android:text="Business overview"
+            android:textColor="#111827" android:textSize="21sp" android:textStyle="bold"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:background="@drawable/summary_bg"
+            android:orientation="vertical" android:padding="18dp">
+            <TextView android:id="@+id/tvSummary"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:lineSpacingExtra="7dp" android:text="Loading..."
+                android:textColor="#172033" android:textSize="16sp"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="22dp" android:text="Quick actions"
+            android:textColor="#111827" android:textSize="21sp" android:textStyle="bold"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="11dp" android:orientation="horizontal">
+            <Button android:id="@+id/btnSale" android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_marginEnd="6dp" android:layout_weight="1" android:background="@drawable/action_blue"
+                android:minHeight="0dp" android:text="＋  Add Sale" android:textAllCaps="false"
+                android:textColor="@color/white" android:textSize="15sp" android:textStyle="bold"/>
+            <Button android:id="@+id/btnStock" android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_marginStart="6dp" android:layout_weight="1" android:background="@drawable/action_white"
+                android:minHeight="0dp" android:text="▦  Stock" android:textAllCaps="false"
+                android:textColor="@color/rk_dark" android:textSize="15sp" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:orientation="horizontal">
+            <Button android:id="@+id/btnRepair" android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_marginEnd="6dp" android:layout_weight="1" android:background="@drawable/action_white"
+                android:minHeight="0dp" android:text="⚒  Repairs" android:textAllCaps="false"
+                android:textColor="@color/rk_dark" android:textSize="15sp" android:textStyle="bold"/>
+            <Button android:id="@+id/btnPending" android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_marginStart="6dp" android:layout_weight="1" android:background="@drawable/action_red"
+                android:minHeight="0dp" android:text="₹  Receivables" android:textAllCaps="false"
+                android:textColor="@color/white" android:textSize="15sp" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:orientation="horizontal">
+            <Button android:id="@+id/btnExpense" android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_marginEnd="6dp" android:layout_weight="1" android:background="@drawable/action_white"
+                android:minHeight="0dp" android:text="−  Expenses" android:textAllCaps="false"
+                android:textColor="#374151" android:textSize="15sp" android:textStyle="bold"/>
+            <Button android:id="@+id/btnProfit" android:layout_width="0dp" android:layout_height="72dp"
+                android:layout_marginStart="6dp" android:layout_weight="1" android:background="@drawable/action_green"
+                android:minHeight="0dp" android:text="↗  Profit &amp; Loss" android:textAllCaps="false"
+                android:textColor="@color/white" android:textSize="15sp" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:text="Business tools"
+            android:textColor="#111827" android:textSize="21sp" android:textStyle="bold"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:background="@drawable/summary_bg"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Invoice  •  Customers  •  Purchases  •  Reports"
+                android:textColor="#374151" android:textSize="14sp" android:textStyle="bold"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Professional business modules can be added without changing the dashboard."
+                android:textColor="#6B7280" android:textSize="13sp"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="15dp" android:text="Daily pending reminder  •  10:00 AM"
+            android:textColor="#7A8494" android:textSize="12sp"/>
     </LinearLayout>
 </ScrollView>
