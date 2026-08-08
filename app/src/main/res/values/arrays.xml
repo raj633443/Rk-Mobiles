@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="payment_modes">
+        <item>Cash</item>
+        <item>UPI</item>
+        <item>Card</item>
+        <item>Credit</item>
+        <item>Bank</item>
+    </string-array>
+</resources>

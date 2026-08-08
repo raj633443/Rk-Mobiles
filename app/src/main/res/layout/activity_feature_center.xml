@@ -1,72 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg"
-    android:fillViewport="true">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/bg">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="18dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Business Suite" android:textColor="@color/rk_dark"
+            android:textSize="28sp" android:textStyle="bold"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" android:text="RK Mobiles professional tools"
+            android:textColor="#6B7280" android:textSize="14sp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="18dp">
+        <Button android:id="@+id/btnCreateInvoice" android:layout_width="match_parent"
+            android:layout_height="58dp" android:layout_marginTop="20dp"
+            android:backgroundTint="@color/rk_blue" android:text="Create Invoice"
+            android:textColor="@color/white" android:textStyle="bold"/>
+        <Button android:id="@+id/btnCustomers" android:layout_width="match_parent"
+            android:layout_height="58dp" android:layout_marginTop="10dp"
+            android:backgroundTint="@color/rk_dark" android:text="Customers &amp; Ledger"
+            android:textColor="@color/white" android:textStyle="bold"/>
+        <Button android:id="@+id/btnFeatureReports" android:layout_width="match_parent"
+            android:layout_height="58dp" android:layout_marginTop="10dp"
+            android:backgroundTint="#168A45" android:text="Reports &amp; Analytics"
+            android:textColor="@color/white" android:textStyle="bold"/>
+        <Button android:id="@+id/btnFeatureSettings" android:layout_width="match_parent"
+            android:layout_height="58dp" android:layout_marginTop="10dp"
+            android:backgroundTint="#4B5563" android:text="Business Settings"
+            android:textColor="@color/white" android:textStyle="bold"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Business Suite"
-            android:textColor="@color/rk_dark"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Advanced RK Mobiles tools"
-            android:textColor="#6B7280"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnFeatureReports"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/rk_blue"
-            android:text="Reports &amp; Analytics"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnFeatureSettings"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/rk_dark"
-            android:text="Business Settings"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="Feature roadmap"
-            android:textColor="#111827"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/feature_card"
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" android:background="@drawable/feature_card"
             android:padding="16dp"
-            android:text="Sync • Multiple companies • E-way Bills • Deleted transaction restore • Multiple pricing • Bulk update • Credit limits • Fixed assets • Payment reminders • Accounting • WhatsApp • TCS/TDS • Custom fields • Service reminders"
-            android:textColor="#374151"
-            android:textSize="14sp" />
-
+            android:text="Coming next: Purchase, IMEI stock, billwise P&amp;L, partywise P&amp;L, backup and restore."
+            android:textColor="#374151" android:textSize="14sp"/>
     </LinearLayout>
 </ScrollView>
