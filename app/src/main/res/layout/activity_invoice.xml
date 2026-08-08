@@ -1,46 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/bg">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="18dp">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="New Invoice" android:textColor="@color/rk_dark"
-            android:textSize="28sp" android:textStyle="bold"/>
-        <EditText android:id="@+id/etInvoiceCustomer" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="18dp"
-            android:background="@drawable/feature_card" android:hint="Customer name"
-            android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etInvoiceItem" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Item / service"
-            android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etInvoiceQty" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Quantity"
-            android:inputType="number" android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etInvoiceRate" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Sale rate"
-            android:inputType="numberDecimal" android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etInvoiceCost" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Purchase cost"
-            android:inputType="numberDecimal" android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etInvoiceDiscount" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Discount"
-            android:inputType="numberDecimal" android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etInvoicePaid" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Amount paid"
-            android:inputType="numberDecimal" android:padding="14dp" android:singleLine="true"/>
-        <Spinner android:id="@+id/spPaymentMode" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:entries="@array/payment_modes"/>
-        <Button android:id="@+id/btnCreateInvoice" android:layout_width="match_parent"
-            android:layout_height="58dp" android:layout_marginTop="14dp"
-            android:backgroundTint="@color/rk_blue" android:text="CREATE INVOICE"
-            android:textColor="@color/white" android:textStyle="bold"/>
-    </LinearLayout>
-</ScrollView>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="New Invoice" android:textColor="@color/rk_dark" android:textSize="28sp" android:textStyle="bold"/>
+<EditText android:id="@+id/etInvoiceCustomer" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="16dp" android:hint="Customer name" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etInvoiceItem" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Item / service" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etInvoiceQty" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Quantity" android:inputType="number" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etInvoiceRate" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Sale rate" android:inputType="numberDecimal" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etInvoiceCost" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Purchase cost" android:inputType="numberDecimal" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etInvoiceDiscount" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Discount" android:inputType="numberDecimal" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etInvoicePaid" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Amount paid" android:inputType="numberDecimal" android:background="@drawable/feature_card" android:padding="14dp"/>
+<Spinner android:id="@+id/spPaymentMode" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:entries="@array/payment_modes"/>
+<Button android:id="@+id/btnCreateInvoice" android:layout_width="match_parent" android:layout_height="58dp" android:layout_marginTop="14dp" android:backgroundTint="@color/rk_blue" android:text="CREATE INVOICE" android:textColor="@color/white"/>
+</LinearLayout></ScrollView>

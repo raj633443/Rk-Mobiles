@@ -8,31 +8,15 @@ class BusinessReportsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_business_reports)
-
-        val db = DbHelper(this)
-
-        findViewById<TextView>(R.id.reportBody).text = """BUSINESS REPORTS
-
-Sales: Rs ${money(db.salesTotal())}
-Sales Cost: Rs ${money(db.costTotal())}
-Expenses: Rs ${money(db.expenseTotal())}
-Repair Profit: Rs ${money(db.repairProfit())}
-Receivables: Rs ${money(db.pendingTotal())}
-
-Net Profit: Rs ${money(
-            db.salesTotal() -
-                db.costTotal() -
-                db.expenseTotal() +
-                db.repairProfit()
-        )}
-
-Available report modules:
-• Balance Sheet
-• Billwise Profit & Loss
-• Partywise Profit & Loss
-• Item Batch & Serial
-• Invoice Profit Check"""
+        val db=DbHelper(this)
+        val net=db.salesTotal()-db.costTotal()-db.expenseTotal()+db.repairProfit()
+        findViewById<TextView>(R.id.reportBody).text =
+            "Sales: Rs ${f(db.salesTotal())}\n" +
+            "Sales Cost: Rs ${f(db.costTotal())}\n" +
+            "Expenses: Rs ${f(db.expenseTotal())}\n" +
+            "Repair Profit: Rs ${f(db.repairProfit())}\n" +
+            "Receivables: Rs ${f(db.pendingTotal())}\n\n" +
+            "Net Profit: Rs ${f(net)}"
     }
-
-    private fun money(v: Double) = String.format("%.2f", v)
+    private fun f(v:Double)=String.format("%.2f",v)
 }

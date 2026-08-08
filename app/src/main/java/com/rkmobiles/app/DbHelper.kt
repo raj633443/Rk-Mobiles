@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", null, 3) {
+class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", null, 4) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE stock(id INTEGER PRIMARY KEY AUTOINCREMENT, model TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, sell REAL NOT NULL, brand TEXT DEFAULT '', imei TEXT DEFAULT '')")
@@ -29,6 +29,11 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
         }
         if (oldVersion < 3) {
             db.execSQL("CREATE TABLE purchases(id INTEGER PRIMARY KEY AUTOINCREMENT, supplier TEXT, item TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, imei TEXT DEFAULT '', created INTEGER NOT NULL)")
+        }
+        if (oldVersion < 4) {
+            db.execSQL("CREATE TABLE payments(id INTEGER PRIMARY KEY AUTOINCREMENT, customerId INTEGER, customerName TEXT NOT NULL, amount REAL NOT NULL, mode TEXT NOT NULL, note TEXT DEFAULT '', created INTEGER NOT NULL)")
+            db.execSQL("CREATE TABLE stock_moves(id INTEGER PRIMARY KEY AUTOINCREMENT, stockId INTEGER, type TEXT NOT NULL, qty INTEGER NOT NULL, reference TEXT DEFAULT '', created INTEGER NOT NULL)")
+            db.execSQL("CREATE TABLE firm_profile(id INTEGER PRIMARY KEY CHECK(id=1), name TEXT NOT NULL, phone TEXT DEFAULT '', address TEXT DEFAULT '', gstin TEXT DEFAULT '', invoicePrefix TEXT DEFAULT 'RK')")
         }
     }
 
@@ -158,4 +163,98 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
         }
         return out
     }
+    fun invoiceRows(): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            "SELECT id,invoiceNo,customerName,total,paid,paymentMode,created FROM invoices ORDER BY id DESC", null
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1), c.getString(2) ?: "",
+                String.format("%.2f", c.getDouble(3)),
+                String.format("%.2f", c.getDouble(4)),
+                c.getString(5), c.getString(6)
+            ))
+        }
+        return out
+    }
+
+    fun customerLedger(customerName: String): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            """SELECT 'Invoice', invoiceNo, total, paid, created FROM invoices
+               WHERE customerName=? ORDER BY created DESC""",
+            arrayOf(customerName)
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1),
+                String.format("%.2f", c.getDouble(2)),
+                String.format("%.2f", c.getDouble(3)), c.getString(4)
+            ))
+        }
+        readableDatabase.rawQuery(
+            """SELECT 'Payment', note, amount, amount, created FROM payments
+               WHERE customerName=? ORDER BY created DESC""",
+            arrayOf(customerName)
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1),
+                String.format("%.2f", c.getDouble(2)),
+                String.format("%.2f", c.getDouble(3)), c.getString(4)
+            ))
+        }
+        return out
+    }
+
+    fun addPayment(customerId: Long?, customerName: String, amount: Double, mode: String, note: String) {
+        val v = ContentValues().apply {
+            if (customerId == null) putNull("customerId") else put("customerId", customerId)
+            put("customerName", customerName); put("amount", amount)
+            put("mode", mode); put("note", note); put("created", System.currentTimeMillis())
+        }
+        writableDatabase.insertOrThrow("payments", null, v)
+    }
+
+    fun addStockMove(stockId: Long?, type: String, qty: Int, reference: String = "") {
+        val v = ContentValues().apply {
+            if (stockId == null) putNull("stockId") else put("stockId", stockId)
+            put("type", type); put("qty", qty); put("reference", reference)
+            put("created", System.currentTimeMillis())
+        }
+        writableDatabase.insertOrThrow("stock_moves", null, v)
+    }
+
+    fun lowStockRows(limit: Int = 2): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            "SELECT id,brand,model,qty,imei FROM stock WHERE qty<=? ORDER BY qty ASC, model",
+            arrayOf(limit.toString())
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1) ?: "", c.getString(2),
+                c.getString(3), c.getString(4) ?: ""
+            ))
+        }
+        return out
+    }
+
+    fun setFirmProfile(name: String, phone: String, address: String, gstin: String, prefix: String) {
+        val v = ContentValues().apply {
+            put("id", 1); put("name", name); put("phone", phone)
+            put("address", address); put("gstin", gstin); put("invoicePrefix", prefix)
+        }
+        writableDatabase.insertWithOnConflict("firm_profile", null, v, SQLiteDatabase.CONFLICT_REPLACE)
+    }
+
+    fun firmProfile(): Array<String> {
+        readableDatabase.rawQuery(
+            "SELECT name,phone,address,gstin,invoicePrefix FROM firm_profile WHERE id=1", null
+        ).use { c ->
+            if (c.moveToFirst()) return arrayOf(
+                c.getString(0), c.getString(1) ?: "", c.getString(2) ?: "",
+                c.getString(3) ?: "", c.getString(4) ?: "RK"
+            )
+        }
+        return arrayOf("RK Mobile", "", "", "", "RK")
+    }
+
 }

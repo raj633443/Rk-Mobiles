@@ -1,37 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/bg">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="18dp">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Customers" android:textColor="@color/rk_dark"
-            android:textSize="28sp" android:textStyle="bold"/>
-        <EditText android:id="@+id/etCustomerName" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="18dp"
-            android:background="@drawable/feature_card" android:hint="Customer name"
-            android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etCustomerPhone" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Phone"
-            android:inputType="phone" android:padding="14dp" android:singleLine="true"/>
-        <EditText android:id="@+id/etCustomerAddress" android:layout_width="match_parent"
-            android:layout_height="70dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Address"
-            android:padding="14dp"/>
-        <EditText android:id="@+id/etCreditLimit" android:layout_width="match_parent"
-            android:layout_height="54dp" android:layout_marginTop="8dp"
-            android:background="@drawable/feature_card" android:hint="Credit limit"
-            android:inputType="numberDecimal" android:padding="14dp" android:singleLine="true"/>
-        <Button android:id="@+id/btnSaveCustomer" android:layout_width="match_parent"
-            android:layout_height="56dp" android:layout_marginTop="12dp"
-            android:backgroundTint="@color/rk_blue" android:text="SAVE CUSTOMER"
-            android:textColor="@color/white" android:textStyle="bold"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="22dp" android:text="Customer list"
-            android:textColor="#111827" android:textSize="20sp" android:textStyle="bold"/>
-        <LinearLayout android:id="@+id/customerList" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp"
-            android:orientation="vertical"/>
-    </LinearLayout>
-</ScrollView>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Customers" android:textColor="@color/rk_dark" android:textSize="28sp" android:textStyle="bold"/>
+<EditText android:id="@+id/etCustomerName" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="16dp" android:hint="Customer name" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etCustomerPhone" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Phone" android:inputType="phone" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etCustomerAddress" android:layout_width="match_parent" android:layout_height="70dp" android:layout_marginTop="8dp" android:hint="Address" android:background="@drawable/feature_card" android:padding="14dp"/>
+<EditText android:id="@+id/etCreditLimit" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:hint="Credit limit" android:inputType="numberDecimal" android:background="@drawable/feature_card" android:padding="14dp"/>
+<Button android:id="@+id/btnSaveCustomer" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="12dp" android:backgroundTint="@color/rk_blue" android:text="SAVE CUSTOMER" android:textColor="@color/white"/>
+<LinearLayout android:id="@+id/customerList" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:orientation="vertical"/>
+</LinearLayout></ScrollView>
