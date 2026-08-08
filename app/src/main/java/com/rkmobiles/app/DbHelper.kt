@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", null, 2) {
+class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", null, 3) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE stock(id INTEGER PRIMARY KEY AUTOINCREMENT, model TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, sell REAL NOT NULL, brand TEXT DEFAULT '', imei TEXT DEFAULT '')")
@@ -16,6 +16,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
         db.execSQL("CREATE TABLE customers(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, phone TEXT UNIQUE, address TEXT DEFAULT '', creditLimit REAL NOT NULL DEFAULT 0)")
         db.execSQL("CREATE TABLE invoices(id INTEGER PRIMARY KEY AUTOINCREMENT, invoiceNo TEXT UNIQUE NOT NULL, customerId INTEGER, customerName TEXT, subtotal REAL NOT NULL, discount REAL NOT NULL DEFAULT 0, total REAL NOT NULL, paid REAL NOT NULL DEFAULT 0, paymentMode TEXT NOT NULL, created INTEGER NOT NULL)")
         db.execSQL("CREATE TABLE invoice_items(id INTEGER PRIMARY KEY AUTOINCREMENT, invoiceId INTEGER NOT NULL, description TEXT NOT NULL, qty INTEGER NOT NULL, rate REAL NOT NULL, cost REAL NOT NULL)")
+        db.execSQL("CREATE TABLE purchases(id INTEGER PRIMARY KEY AUTOINCREMENT, supplier TEXT, item TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, imei TEXT DEFAULT '', created INTEGER NOT NULL)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -26,6 +27,9 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
             db.execSQL("CREATE TABLE invoices(id INTEGER PRIMARY KEY AUTOINCREMENT, invoiceNo TEXT UNIQUE NOT NULL, customerId INTEGER, customerName TEXT, subtotal REAL NOT NULL, discount REAL NOT NULL DEFAULT 0, total REAL NOT NULL, paid REAL NOT NULL DEFAULT 0, paymentMode TEXT NOT NULL, created INTEGER NOT NULL)")
             db.execSQL("CREATE TABLE invoice_items(id INTEGER PRIMARY KEY AUTOINCREMENT, invoiceId INTEGER NOT NULL, description TEXT NOT NULL, qty INTEGER NOT NULL, rate REAL NOT NULL, cost REAL NOT NULL)")
         }
+        if (oldVersion < 3) {
+            db.execSQL("CREATE TABLE purchases(id INTEGER PRIMARY KEY AUTOINCREMENT, supplier TEXT, item TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, imei TEXT DEFAULT '', created INTEGER NOT NULL)")
+        }
     }
 
     fun insertStock(model: String, qty: Int, buy: Double, sell: Double, brand: String = "", imei: String = "") {
@@ -33,7 +37,33 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
             put("model", model); put("qty", qty); put("buy", buy); put("sell", sell)
             put("brand", brand); put("imei", imei)
         }
-        writableDatabase.insert("stock", null, v)
+        writableDatabase.insertOrThrow("stock", null, v)
+    }
+
+    fun insertPurchase(supplier: String, item: String, qty: Int, buy: Double, imei: String = "") {
+        val v = ContentValues().apply {
+            put("supplier", supplier); put("item", item); put("qty", qty)
+            put("buy", buy); put("imei", imei); put("created", System.currentTimeMillis())
+        }
+        writableDatabase.insertOrThrow("purchases", null, v)
+    }
+
+    fun searchImei(query: String): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            "SELECT id,brand,model,imei,qty,buy,sell FROM stock WHERE imei LIKE ? OR model LIKE ? ORDER BY id DESC",
+            arrayOf("%$query%", "%$query%")
+        ).use { c ->
+            while (c.moveToNext()) {
+                out.add(arrayOf(
+                    c.getString(0), c.getString(1) ?: "", c.getString(2),
+                    c.getString(3) ?: "", c.getString(4),
+                    String.format("%.2f", c.getDouble(5)),
+                    String.format("%.2f", c.getDouble(6))
+                ))
+            }
+        }
+        return out
     }
 
     fun insertRepair(customer: String, phone: String, model: String, issue: String, cost: Double, charge: Double) {
@@ -79,43 +109,27 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
         return if (existing >= 0) {
             writableDatabase.update("customers", values, "id=?", arrayOf(existing.toString()))
             existing
-        } else {
-            writableDatabase.insertOrThrow("customers", null, values)
-        }
+        } else writableDatabase.insertOrThrow("customers", null, values)
     }
 
     fun customerRows(): List<Array<String>> {
         val out = mutableListOf<Array<String>>()
-        readableDatabase.rawQuery(
-            "SELECT id,name,phone,address,creditLimit FROM customers ORDER BY name COLLATE NOCASE",
-            null
-        ).use { c ->
-            while (c.moveToNext()) {
-                out.add(arrayOf(
-                    c.getString(0), c.getString(1), c.getString(2) ?: "",
-                    c.getString(3) ?: "", String.format("%.2f", c.getDouble(4))
-                ))
-            }
+        readableDatabase.rawQuery("SELECT id,name,phone,address,creditLimit FROM customers ORDER BY name COLLATE NOCASE", null).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1), c.getString(2) ?: "",
+                c.getString(3) ?: "", String.format("%.2f", c.getDouble(4))
+            ))
         }
         return out
     }
 
-    fun createInvoice(
-        invoiceNo: String,
-        customerId: Long?,
-        customerName: String,
-        subtotal: Double,
-        discount: Double,
-        paid: Double,
-        paymentMode: String
-    ): Long {
+    fun createInvoice(invoiceNo: String, customerId: Long?, customerName: String, subtotal: Double, discount: Double, paid: Double, paymentMode: String): Long {
         val total = (subtotal - discount).coerceAtLeast(0.0)
         val values = ContentValues().apply {
             put("invoiceNo", invoiceNo)
             if (customerId == null) putNull("customerId") else put("customerId", customerId)
-            put("customerName", customerName)
-            put("subtotal", subtotal); put("discount", discount); put("total", total)
-            put("paid", paid.coerceIn(0.0, total)); put("paymentMode", paymentMode)
+            put("customerName", customerName); put("subtotal", subtotal); put("discount", discount)
+            put("total", total); put("paid", paid.coerceIn(0.0, total)); put("paymentMode", paymentMode)
             put("created", System.currentTimeMillis())
         }
         return writableDatabase.insertOrThrow("invoices", null, values)
@@ -139,10 +153,8 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
     fun pendingRows(): List<Array<String>> {
         val out = mutableListOf<Array<String>>()
         readableDatabase.rawQuery("SELECT id,customer,phone,amount,dueDate FROM pending WHERE paid=0 ORDER BY id DESC", null).use { c ->
-            while (c.moveToNext()) out.add(arrayOf(
-                c.getString(0), c.getString(1), c.getString(2) ?: "",
-                String.format("%.2f", c.getDouble(3)), c.getString(4) ?: ""
-            ))
+            while (c.moveToNext()) out.add(arrayOf(c.getString(0), c.getString(1), c.getString(2) ?: "",
+                String.format("%.2f", c.getDouble(3)), c.getString(4) ?: ""))
         }
         return out
     }
