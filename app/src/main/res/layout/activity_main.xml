@@ -26,7 +26,7 @@
     <Button android:id="@+id/btnPending" android:text="Pending Payments" android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <Button android:id="@+id/btnStock" android:text="Stock" android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <Button android:id="@+id/btnExpense" android:text="Expense" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnProfitLoss" android:text="Profit & Loss" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnProfitLoss" android:text="Profit &amp; Loss" android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <Button android:id="@+id/btnSettings" android:text="Settings" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </LinearLayout>
 </ScrollView>
