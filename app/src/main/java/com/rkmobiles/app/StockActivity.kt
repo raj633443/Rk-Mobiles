@@ -1,15 +1,21 @@
 package com.rkmobiles.app
+
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-class StockActivity:AppCompatActivity(){
- override fun onCreate(b:Bundle?){super.onCreate(b);setContentView(R.layout.activity_stock);load()
-  findViewById<Button>(R.id.btnAddStock).setOnClickListener{
-   val i=findViewById<EditText>(R.id.etItem).text.toString(); val q=findViewById<EditText>(R.id.etQty).text.toString().toIntOrNull()?:0
-   val buy=findViewById<EditText>(R.id.etBuy).text.toString().toDoubleOrNull()?:0.0; val sell=findViewById<EditText>(R.id.etSell).text.toString().toDoubleOrNull()?:0.0
-   if(i.isBlank()||q<=0){Toast.makeText(this,"Enter item and quantity",Toast.LENGTH_SHORT).show();return@setOnClickListener}
-   DbHelper(this).writableDatabase.execSQL("INSERT INTO stock(item,qty,buy,sell) VALUES(?,?,?,?)",arrayOf(i,q,buy,sell));load()
-  }
- }
- private fun load(){val a=ArrayList<String>();DbHelper(this).readableDatabase.rawQuery("SELECT item,qty,buy,sell FROM stock ORDER BY item",null).use{c->while(c.moveToNext())a.add("${c.getString(0)}  •  ${c.getInt(1)} pcs  • Buy ₹${c.getDouble(2).toInt()} • Sell ₹${c.getDouble(3).toInt()}")};findViewById<ListView>(R.id.listStock).adapter=ArrayAdapter(this,android.R.layout.simple_list_item_1,a)}
+
+class StockActivity : AppCompatActivity() {
+    private lateinit var db: DbHelper
+    private lateinit var list: TextView
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState); setContentView(R.layout.activity_stock); db = DbHelper(this); list = findViewById(R.id.tvStockList)
+        findViewById<Button>(R.id.btnAddStock).setOnClickListener {
+            val model = findViewById<EditText>(R.id.etModel).text.toString().trim(); val qty = findViewById<EditText>(R.id.etQty).text.toString().toIntOrNull(); val buy = findViewById<EditText>(R.id.etBuy).text.toString().toDoubleOrNull(); val sell = findViewById<EditText>(R.id.etSell).text.toString().toDoubleOrNull()
+            if (model.isEmpty() || qty == null || buy == null || sell == null) { Toast.makeText(this, "Enter all stock details", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+            db.insertStock(model, qty, buy, sell); Toast.makeText(this, "Stock saved", Toast.LENGTH_SHORT).show(); list.text = "Total stock units: ${db.stockCount()}"
+        }
+    }
 }

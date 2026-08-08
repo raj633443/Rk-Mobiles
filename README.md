@@ -1,11 +1,8 @@
-# RK Mobiles
+# RK Mobiles Manager
 
-Android 14-targeted Kotlin + XML app for repair, pending payments, stock, expenses and profit/loss.
+Android 14-compatible Kotlin app for RK Mobiles.
 
-## Browser APK build
-Upload this project to a GitHub repository. The workflow at `.github/workflows/build-apk.yml` builds a debug APK in GitHub Actions.
+Features: dashboard, stock, repairs, customer pending dues, sales, expenses, profit & loss, and 10:00 AM daily pending reminder.
 
-After the workflow completes:
-Actions -> Build RK Mobiles APK -> latest run -> Artifacts -> RK-Mobiles-debug-apk.
-
-Default app PIN: 1234.
+Build: `gradle assembleDebug`
+APK: `app/build/outputs/apk/debug/app-debug.apk`

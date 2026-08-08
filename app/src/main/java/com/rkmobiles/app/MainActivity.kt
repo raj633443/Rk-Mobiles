@@ -1,36 +1,40 @@
 package com.rkmobiles.app
 
-import android.app.*
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import java.util.*
+import androidx.core.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var db: DbHelper
+    private lateinit var summary: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<Button>(R.id.btnAddRepair).setOnClickListener { startActivity(Intent(this, AddRepairActivity::class.java)) }
-        findViewById<Button>(R.id.btnPending).setOnClickListener { startActivity(Intent(this, PendingActivity::class.java)) }
+        db = DbHelper(this)
+        summary = findViewById(R.id.tvSummary)
         findViewById<Button>(R.id.btnStock).setOnClickListener { startActivity(Intent(this, StockActivity::class.java)) }
+        findViewById<Button>(R.id.btnRepair).setOnClickListener { startActivity(Intent(this, RepairActivity::class.java)) }
+        findViewById<Button>(R.id.btnPending).setOnClickListener { startActivity(Intent(this, PendingActivity::class.java)) }
+        findViewById<Button>(R.id.btnSale).setOnClickListener { startActivity(Intent(this, SaleActivity::class.java)) }
         findViewById<Button>(R.id.btnExpense).setOnClickListener { startActivity(Intent(this, ExpenseActivity::class.java)) }
-        findViewById<Button>(R.id.btnProfitLoss).setOnClickListener { startActivity(Intent(this, ProfitLossActivity::class.java)) }
-        findViewById<Button>(R.id.btnSettings).setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
+        findViewById<Button>(R.id.btnProfit).setOnClickListener { startActivity(Intent(this, ProfitLossActivity::class.java)) }
         ReminderScheduler.schedule(this)
+        if (Build.VERSION.SDK_INT >= 33 && ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 20)
     }
-    override fun onResume() { super.onResume(); loadDashboard() }
-    private fun loadDashboard() {
-        val db = DbHelper(this).readableDatabase
-        db.rawQuery("SELECT IFNULL(SUM(total-expense),0), IFNULL(SUM(pending),0), COUNT(CASE WHEN pending>0 THEN 1 END) FROM repairs", null).use {
-            if (it.moveToFirst()) {
-                findViewById<TextView>(R.id.tvProfit).text = "₹${it.getDouble(0).toInt()}"
-                findViewById<TextView>(R.id.tvPending).text = "₹${it.getDouble(1).toInt()}"
-                findViewById<TextView>(R.id.tvRepairs).text = "Pending Repairs: ${it.getInt(2)}"
-            }
-        }
-        db.rawQuery("SELECT COUNT(*) FROM stock WHERE qty<=5", null).use {
-            if (it.moveToFirst()) findViewById<TextView>(R.id.tvLowStock).text = "Low Stock: ${it.getInt(0)}"
-        }
+
+    override fun onResume() { super.onResume(); if (::db.isInitialized) refresh() }
+    private fun refresh() {
+        summary.text = "Stock: ${db.stockCount()} units
+Pending: Rs ${money(db.pendingTotal())}
+Sales: Rs ${money(db.salesTotal())}
+Profit: Rs ${money(db.salesTotal() - db.costTotal() - db.expenseTotal() + db.repairProfit())}"
     }
+    private fun money(v: Double) = String.format("%.2f", v)
 }

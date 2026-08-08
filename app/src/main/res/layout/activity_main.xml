@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/background" android:layout_width="match_parent" android:layout_height="match_parent">
-<LinearLayout android:orientation="vertical" android:padding="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView android:text="RK Mobiles" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/primary"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <TextView android:text="@string/tagline" android:textSize="13sp" android:textColor="@color/pending"
-        android:layout_marginBottom="14dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-
-    <LinearLayout android:orientation="vertical" android:background="@drawable/card_bg" android:padding="16dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
-        <TextView android:text="Today Profit" android:textSize="14sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvProfit" android:text="₹0" android:textSize="26sp" android:textStyle="bold"
-            android:textColor="@color/profit" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:text="Pending Amount" android:textSize="14sp" android:layout_marginTop="12dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvPending" android:text="₹0" android:textSize="26sp" android:textStyle="bold"
-            android:textColor="@color/pending" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvRepairs" android:text="Pending Repairs: 0" android:layout_marginTop="10dp"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView android:id="@+id/tvLowStock" android:text="Low Stock: 0" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <Button android:id="@+id/btnAddRepair" android:text="+ Add Repair" android:layout_marginTop="14dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnPending" android:text="Pending Payments" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnStock" android:text="Stock" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnExpense" android:text="Expense" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnProfitLoss" android:text="Profit &amp; Loss" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnSettings" android:text="Settings" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg">
+<LinearLayout android:orientation="vertical" android:padding="18dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+<TextView android:text="RK MOBILES" android:textSize="30sp" android:textStyle="bold" android:textColor="@color/rk_dark" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<TextView android:text="Business Manager" android:textSize="15sp" android:layout_marginBottom="14dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<TextView android:id="@+id/tvSummary" android:text="Loading..." android:textSize="18sp" android:background="@drawable/card_bg" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp"/>
+<Button android:id="@+id/btnStock" android:text="Stock" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<Button android:id="@+id/btnRepair" android:text="Repairs" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<Button android:id="@+id/btnPending" android:text="Customer Pending" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<Button android:id="@+id/btnSale" android:text="Add Sale" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<Button android:id="@+id/btnExpense" android:text="Add Expense" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<Button android:id="@+id/btnProfit" android:text="Profit &amp; Loss" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<TextView android:text="Daily pending reminder: 10:00 AM" android:textSize="13sp" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>
 </ScrollView>
