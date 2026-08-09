@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/rk_bg">
 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
-<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RK Mobile Business Suite" android:textColor="@color/rk_dark" android:textSize="28sp" android:textStyle="bold"/>
-<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Billing • Stock • Customers • Reports" android:textColor="#6B7280" android:textSize="14sp"/>
-<Button android:id="@+id/btnCreateInvoice" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="18dp" android:backgroundTint="@color/rk_blue" android:text="Create Invoice" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnInvoiceHistory" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="@color/rk_dark" android:text="Invoice History" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnCustomers" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#334155" android:text="Customers" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnLedger" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#475569" android:text="Customer Ledger &amp; Payments" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnPurchase" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#168A45" android:text="Purchase" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnImeiStock" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#7C3AED" android:text="IMEI / Stock Search" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnStockReport" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#0F766E" android:text="Stock Report" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnFeatureReports" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#374151" android:text="Business Reports" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnBackup" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#92400E" android:text="Backup &amp; Restore" android:textColor="@color/white" android:textStyle="bold"/>
-<Button android:id="@+id/btnFeatureSettings" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="8dp" android:backgroundTint="#6B7280" android:text="Business Settings" android:textColor="@color/white" android:textStyle="bold"/>
-</LinearLayout>
-</ScrollView>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Business Suite" android:textColor="@color/rk_dark" android:textSize="30sp" android:textStyle="bold"/>
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Every button below opens a working module — no dummy switches." android:textColor="@color/rk_muted"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Sales &amp; Customers" android:textSize="18sp" android:textStyle="bold" android:textColor="@color/rk_dark"/>
+<Button android:id="@+id/btnCreateInvoice" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="＋ New Invoice" android:background="@drawable/card"/>
+<Button android:id="@+id/btnInvoiceHistory" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Invoice History" android:background="@drawable/card"/>
+<Button android:id="@+id/btnCustomers" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Customers" android:background="@drawable/card"/>
+<Button android:id="@+id/btnLedger" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Customer Ledger &amp; Payments" android:background="@drawable/card"/>
+<Button android:id="@+id/btnPending" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Pending Payments" android:background="@drawable/card"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Inventory &amp; Repairs" android:textSize="18sp" android:textStyle="bold" android:textColor="@color/rk_dark"/>
+<Button android:id="@+id/btnStock" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Stock" android:background="@drawable/card"/>
+<Button android:id="@+id/btnPurchase" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Purchase → Stock" android:background="@drawable/card"/>
+<Button android:id="@+id/btnImeiStock" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="IMEI / Model Search" android:background="@drawable/card"/>
+<Button android:id="@+id/btnStockReport" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Stock Report / Low Stock" android:background="@drawable/card"/>
+<Button android:id="@+id/btnRepairs" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Repair Jobs" android:background="@drawable/card"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Finance &amp; Settings" android:textSize="18sp" android:textStyle="bold" android:textColor="@color/rk_dark"/>
+<Button android:id="@+id/btnProfitLoss" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Profit &amp; Loss" android:background="@drawable/card"/>
+<Button android:id="@+id/btnExpenses" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Expenses" android:background="@drawable/card"/>
+<Button android:id="@+id/btnFeatureReports" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Business Reports" android:background="@drawable/card"/>
+<Button android:id="@+id/btnBackup" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Local Backup" android:background="@drawable/card"/>
+<Button android:id="@+id/btnFeatureSettings" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="Business Settings" android:background="@drawable/card"/>
+</LinearLayout></ScrollView>

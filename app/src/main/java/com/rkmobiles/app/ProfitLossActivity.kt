@@ -8,23 +8,21 @@ class ProfitLossActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profit_loss)
-        refresh()
-    }
 
-    private fun refresh() {
         val db = DbHelper(this)
         val sales = db.salesTotal()
         val cost = db.costTotal()
         val expenses = db.expenseTotal()
         val repair = db.repairProfit()
+        val net = sales - cost - expenses + repair
 
         findViewById<TextView>(R.id.tvPL).text =
-            "Sales: Rs ${f(sales)}\n" +
-            "Sales Cost: Rs ${f(cost)}\n" +
-            "Expenses: Rs ${f(expenses)}\n" +
-            "Repair Profit: Rs ${f(repair)}\n\n" +
-            "Net Profit: Rs ${f(sales - cost - expenses + repair)}"
+            "Sales\n₹ ${money(sales)}\n\n" +
+            "Sales Cost\n₹ ${money(cost)}\n\n" +
+            "Expenses\n₹ ${money(expenses)}\n\n" +
+            "Repair Profit\n₹ ${money(repair)}\n\n" +
+            "NET PROFIT\n₹ ${money(net)}"
     }
 
-    private fun f(v: Double) = String.format("%.2f", v)
+    private fun money(value: Double): String = String.format("%,.2f", value)
 }

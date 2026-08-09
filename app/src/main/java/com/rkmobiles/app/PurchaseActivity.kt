@@ -23,8 +23,8 @@ class PurchaseActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            DbHelper(this).insertPurchase(supplier, item, qty, buy, imei)
-            Toast.makeText(this, "Purchase saved", Toast.LENGTH_SHORT).show()
+            DbHelper(this).savePurchaseAndUpdateStock(supplier, item, qty, buy, imei)
+            Toast.makeText(this, "Purchase saved and stock updated", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

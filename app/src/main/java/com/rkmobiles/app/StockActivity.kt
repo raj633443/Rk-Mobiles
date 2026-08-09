@@ -1,21 +1,12 @@
 package com.rkmobiles.app
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
-class StockActivity : AppCompatActivity() {
-    private lateinit var db: DbHelper
-    private lateinit var list: TextView
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState); setContentView(R.layout.activity_stock); db = DbHelper(this); list = findViewById(R.id.tvStockList)
-        findViewById<Button>(R.id.btnAddStock).setOnClickListener {
-            val model = findViewById<EditText>(R.id.etModel).text.toString().trim(); val qty = findViewById<EditText>(R.id.etQty).text.toString().toIntOrNull(); val buy = findViewById<EditText>(R.id.etBuy).text.toString().toDoubleOrNull(); val sell = findViewById<EditText>(R.id.etSell).text.toString().toDoubleOrNull()
-            if (model.isEmpty() || qty == null || buy == null || sell == null) { Toast.makeText(this, "Enter all stock details", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
-            db.insertStock(model, qty, buy, sell); Toast.makeText(this, "Stock saved", Toast.LENGTH_SHORT).show(); list.text = "Total stock units: ${db.stockCount()}"
-        }
-    }
+class StockActivity:AppCompatActivity(){
+ override fun onCreate(b:Bundle?){super.onCreate(b);setContentView(R.layout.activity_stock);render()}
+ private fun render(){val box=findViewById<LinearLayout>(R.id.stockList);box.removeAllViews();val db=DbHelper(this)
+  db.stockRows().forEach{r->val t=TextView(this);t.text="${r[1]} ${r[2]}\nQty: ${r[3]}  •  Buy ₹${r[4]}  •  Sell ₹${r[5]}\nIMEI: ${r[6]}";t.textSize=14f;t.setPadding(16,16,16,16);t.setBackgroundResource(R.drawable/card);box.addView(t,LinearLayout.LayoutParams(-1,-2).apply{setMargins(0,0,0,10)})}
+ }
 }

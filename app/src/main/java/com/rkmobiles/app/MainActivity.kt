@@ -1,81 +1,40 @@
 package com.rkmobiles.app
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var db: DbHelper
-    private lateinit var summary: TextView
+    private lateinit var tvSummary: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        db=DbHelper(this)
+        tvSummary=findViewById(R.id.tvSummary)
 
-        db = DbHelper(this)
-        summary = findViewById(R.id.tvSummary)
-
-        findViewById<Button>(R.id.btnStock).setOnClickListener {
-            startActivity(Intent(this, StockActivity::class.java))
-        }
-        findViewById<Button>(R.id.btnRepair).setOnClickListener {
-            startActivity(Intent(this, RepairActivity::class.java))
-        }
-        findViewById<Button>(R.id.btnPending).setOnClickListener {
-            startActivity(Intent(this, PendingActivity::class.java))
-        }
-        findViewById<Button>(R.id.btnSale).setOnClickListener {
-            startActivity(Intent(this, SaleActivity::class.java))
-        }
-        findViewById<Button>(R.id.btnExpense).setOnClickListener {
-            startActivity(Intent(this, ExpenseActivity::class.java))
-        }
-        findViewById<Button>(R.id.btnProfit).setOnClickListener {
-            startActivity(Intent(this, ProfitLossActivity::class.java))
-        }
-        findViewById<Button>(R.id.btnMoreFeatures).setOnClickListener {
-            startActivity(Intent(this, FeatureCenterActivity::class.java))
-        }
-
-        ReminderScheduler.schedule(this)
-
-        if (Build.VERSION.SDK_INT >= 33 &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                20
-            )
-        }
+        findViewById<Button>(R.id.btnNewSale).setOnClickListener { startActivity(Intent(this,InvoiceActivity::class.java)) }
+        findViewById<Button>(R.id.btnRepair).setOnClickListener { startActivity(Intent(this,RepairActivity::class.java)) }
+        findViewById<Button>(R.id.btnStock).setOnClickListener { startActivity(Intent(this,StockActivity::class.java)) }
+        findViewById<Button>(R.id.btnCustomers).setOnClickListener { startActivity(Intent(this,CustomerActivity::class.java)) }
+        findViewById<Button>(R.id.btnPending).setOnClickListener { startActivity(Intent(this,PendingActivity::class.java)) }
+        findViewById<Button>(R.id.btnMore).setOnClickListener { startActivity(Intent(this,FeatureCenterActivity::class.java)) }
+        refresh()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (::db.isInitialized) refresh()
-    }
+    override fun onResume() { super.onResume(); if (::db.isInitialized) refresh() }
 
     private fun refresh() {
-        summary.text =
-            "Stock: ${db.stockCount()} units\n" +
-            "Pending: Rs ${money(db.pendingTotal())}\n" +
-            "Sales: Rs ${money(db.salesTotal())}\n" +
-            "Profit: Rs ${money(
-                db.salesTotal() -
-                    db.costTotal() -
-                    db.expenseTotal() +
-                    db.repairProfit()
-            )}"
+        val sales=db.salesTotal()
+        val profit=sales-db.costTotal()-db.expenseTotal()+db.repairProfit()
+        tvSummary.text="₹ ${money(sales)}\nSales this period"
+        findViewById<TextView>(R.id.tvStock).text=db.stockCount().toString()
+        findViewById<TextView>(R.id.tvPending).text="₹ ${money(db.pendingTotal())}"
+        findViewById<TextView>(R.id.tvProfit).text="₹ ${money(profit)}"
+        findViewById<TextView>(R.id.tvRepairs).text=db.repairCount().toString()
     }
 
-    private fun money(v: Double) = String.format("%.2f", v)
+    private fun money(v:Double)=String.format("%,.2f",v)
 }

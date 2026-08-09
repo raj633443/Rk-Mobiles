@@ -148,6 +148,179 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
         writableDatabase.insertOrThrow("invoice_items", null, values)
     }
 
+
+    fun savePurchaseAndUpdateStock(
+        supplier: String,
+        item: String,
+        qty: Int,
+        buy: Double,
+        imei: String = ""
+    ) {
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            insertPurchase(supplier, item, qty, buy, imei)
+
+            val where: String
+            val args: Array<String>
+            if (imei.isNotBlank()) {
+                where = "imei=?"
+                args = arrayOf(imei)
+            } else {
+                where = "model=? AND (imei='' OR imei IS NULL)"
+                args = arrayOf(item)
+            }
+
+            val stockId = db.query(
+                "stock", arrayOf("id", "qty"),
+                where, args, null, null, "id DESC", "1"
+            ).use { c ->
+                if (c.moveToFirst()) {
+                    val id = c.getLong(0)
+                    val oldQty = c.getInt(1)
+                    val values = ContentValues().apply {
+                        put("qty", oldQty + qty)
+                        put("buy", buy)
+                    }
+                    db.update("stock", values, "id=?", arrayOf(id.toString()))
+                    id
+                } else {
+                    val values = ContentValues().apply {
+                        put("model", item)
+                        put("qty", qty)
+                        put("buy", buy)
+                        put("sell", buy)
+                        put("brand", "")
+                        put("imei", imei)
+                    }
+                    db.insertOrThrow("stock", null, values)
+                }
+            }
+            addStockMove(stockId, "PURCHASE", qty, "Purchase")
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
+        }
+    }
+
+    fun saveInvoiceAndSync(
+        invoiceNo: String,
+        customerName: String,
+        item: String,
+        qty: Int,
+        rate: Double,
+        cost: Double,
+        discount: Double,
+        paid: Double,
+        paymentMode: String
+    ): Long {
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val subtotal = qty * rate
+            val total = (subtotal - discount).coerceAtLeast(0.0)
+            val safePaid = paid.coerceIn(0.0, total)
+
+            val invoiceId = createInvoice(
+                invoiceNo, null, customerName, subtotal, discount, safePaid, paymentMode
+            )
+            addInvoiceItem(invoiceId, item, qty, rate, cost)
+            insertSale(customerName, item, total, qty * cost)
+
+            val balance = total - safePaid
+            if (balance > 0.0) {
+                insertPending(customerName, "", balance, "")
+            }
+
+            val stock = db.query(
+                "stock", arrayOf("id", "qty"),
+                "model=? AND qty>=? AND (imei='' OR imei IS NULL)",
+                arrayOf(item, qty.toString()), null, null, "id ASC", "1"
+            ).use { c ->
+                if (c.moveToFirst()) Pair(c.getLong(0), c.getInt(1)) else null
+            }
+
+            if (stock != null) {
+                val newQty = stock.second - qty
+                db.update(
+                    "stock",
+                    ContentValues().apply { put("qty", newQty) },
+                    "id=?",
+                    arrayOf(stock.first.toString())
+                )
+                addStockMove(stock.first, "SALE", qty, invoiceNo)
+            }
+
+            db.setTransactionSuccessful()
+            return invoiceId
+        } finally {
+            db.endTransaction()
+        }
+    }
+
+    fun customerBalance(customerName: String): Double {
+        val invoiced = readableDatabase.rawQuery(
+            "SELECT COALESCE(SUM(total-paid),0) FROM invoices WHERE customerName=?",
+            arrayOf(customerName)
+        ).use { if (it.moveToFirst()) it.getDouble(0) else 0.0 }
+        val paid = readableDatabase.rawQuery(
+            "SELECT COALESCE(SUM(amount),0) FROM payments WHERE customerName=?",
+            arrayOf(customerName)
+        ).use { if (it.moveToFirst()) it.getDouble(0) else 0.0 }
+        return (invoiced - paid).coerceAtLeast(0.0)
+    }
+
+    fun stockRows(): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            "SELECT id,brand,model,qty,buy,sell,imei FROM stock ORDER BY id DESC", null
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1) ?: "", c.getString(2),
+                c.getString(3), String.format("%.2f", c.getDouble(4)),
+                String.format("%.2f", c.getDouble(5)), c.getString(6) ?: ""
+            ))
+        }
+        return out
+    }
+
+    fun repairRows(): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            "SELECT id,customer,phone,model,issue,cost,charge,status FROM repairs ORDER BY id DESC", null
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1), c.getString(2) ?: "",
+                c.getString(3) ?: "", c.getString(4) ?: "",
+                String.format("%.2f", c.getDouble(5)), String.format("%.2f", c.getDouble(6)),
+                c.getString(7)
+            ))
+        }
+        return out
+    }
+
+    fun expenseRows(): List<Array<String>> {
+        val out = mutableListOf<Array<String>>()
+        readableDatabase.rawQuery(
+            "SELECT id,description,amount,created FROM expenses ORDER BY id DESC", null
+        ).use { c ->
+            while (c.moveToNext()) out.add(arrayOf(
+                c.getString(0), c.getString(1),
+                String.format("%.2f", c.getDouble(2)), c.getString(3)
+            ))
+        }
+        return out
+    }
+
+    fun updateRepairStatus(id: Long, status: String) {
+        writableDatabase.update("repairs", ContentValues().apply { put("status", status) },
+            "id=?", arrayOf(id.toString()))
+    }
+
+    fun repairCount(status: String = "Pending"): Int =
+        readableDatabase.rawQuery("SELECT COUNT(*) FROM repairs WHERE status=?",
+            arrayOf(status)).use { if (it.moveToFirst()) it.getInt(0) else 0 }
+
     fun stockCount(): Int = readableDatabase.rawQuery("SELECT COALESCE(SUM(qty),0) FROM stock", null).use { if (it.moveToFirst()) it.getInt(0) else 0 }
     fun pendingTotal(): Double = readableDatabase.rawQuery("SELECT COALESCE(SUM(amount),0) FROM pending WHERE paid=0", null).use { if (it.moveToFirst()) it.getDouble(0) else 0.0 }
     fun salesTotal(): Double = readableDatabase.rawQuery("SELECT COALESCE(SUM(amount),0) FROM sales", null).use { if (it.moveToFirst()) it.getDouble(0) else 0.0 }

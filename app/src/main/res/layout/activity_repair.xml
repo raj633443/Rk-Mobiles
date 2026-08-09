@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="18dp" android:layout_width="match_parent" android:layout_height="match_parent">
-<TextView android:text="Repairs" android:textSize="28sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<TextView android:text="Track repair customer, issue, cost and charge." android:layout_marginTop="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnAddRepair" android:text="Add Repair" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp"/>
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/rk_bg">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Repair Jobs" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/rk_dark"/>
+<EditText android:id="@+id/etRepairCustomer" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="16dp" android:hint="Customer name" android:background="@drawable/input"/>
+<EditText android:id="@+id/etRepairPhone" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:hint="Phone" android:inputType="phone" android:background="@drawable/input"/>
+<EditText android:id="@+id/etRepairModel" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:hint="Mobile model" android:background="@drawable/input"/>
+<EditText android:id="@+id/etRepairIssue" android:layout_width="match_parent" android:layout_height="80dp" android:layout_marginTop="8dp" android:gravity="top" android:hint="Problem / complaint" android:background="@drawable/input"/>
+<EditText android:id="@+id/etRepairCost" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:hint="Repair cost" android:inputType="numberDecimal" android:background="@drawable/input"/>
+<EditText android:id="@+id/etRepairCharge" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:hint="Customer charge" android:inputType="numberDecimal" android:background="@drawable/input"/>
+<Button android:id="@+id/btnSaveRepair" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="12dp" android:text="SAVE REPAIR JOB" android:textColor="@color/white" android:background="@drawable/primary_button"/>
+<LinearLayout android:id="@+id/repairList" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical"/>
+</LinearLayout></ScrollView>

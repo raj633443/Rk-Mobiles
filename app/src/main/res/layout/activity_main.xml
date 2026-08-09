@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg">
-<LinearLayout android:orientation="vertical" android:padding="18dp" android:layout_width="match_parent" android:layout_height="wrap_content">
-<TextView android:text="RK MOBILES" android:textSize="30sp" android:textStyle="bold" android:textColor="@color/rk_dark" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<TextView android:text="Business Manager" android:textSize="15sp" android:layout_marginBottom="14dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<TextView android:id="@+id/tvSummary" android:text="Loading..." android:textSize="18sp" android:background="@drawable/card_bg" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp"/>
-<Button android:id="@+id/btnStock" android:text="Stock" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnRepair" android:text="Repairs" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnPending" android:text="Customer Pending" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnSale" android:text="Add Sale" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnExpense" android:text="Add Expense" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnProfit" android:text="Profit &amp; Loss" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-<Button android:id="@+id/btnMoreFeatures" android:text="Business Suite  •  More Features" android:textAllCaps="false" android:layout_width="match_parent" android:layout_height="58dp" android:layout_marginTop="10dp" android:backgroundTint="@color/rk_dark" android:textColor="@color/white"/>
-<TextView android:text="Daily pending reminder: 10:00 AM" android:textSize="13sp" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/rk_bg">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+<LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RK Mobile" android:textColor="@color/rk_dark" android:textSize="30sp" android:textStyle="bold"/>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Business Dashboard" android:textColor="@color/rk_muted" android:textSize="14sp"/>
 </LinearLayout>
-</ScrollView>
+<TextView android:id="@+id/tvRepairs" android:layout_width="54dp" android:layout_height="54dp" android:gravity="center" android:text="0" android:textColor="@color/rk_blue" android:textSize="18sp" android:textStyle="bold" android:background="@drawable/card"/>
+</LinearLayout>
+<TextView android:id="@+id/tvSummary" android:layout_width="match_parent" android:layout_height="110dp" android:layout_marginTop="18dp" android:gravity="center_vertical" android:padding="20dp" android:textColor="@color/white" android:textSize="25sp" android:textStyle="bold" android:background="@drawable/primary_button"/>
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:orientation="horizontal">
+<TextView android:id="@+id/tvStock" android:layout_width="0dp" android:layout_height="100dp" android:layout_weight="1" android:gravity="center" android:text="0" android:textColor="@color/rk_dark" android:textSize="24sp" android:textStyle="bold" android:background="@drawable/card"/>
+<TextView android:id="@+id/tvPending" android:layout_width="0dp" android:layout_height="100dp" android:layout_weight="1" android:layout_marginStart="10dp" android:gravity="center" android:text="₹ 0" android:textColor="@color/danger" android:textSize="21sp" android:textStyle="bold" android:background="@drawable/card"/>
+<TextView android:id="@+id/tvProfit" android:layout_width="0dp" android:layout_height="100dp" android:layout_weight="1" android:layout_marginStart="10dp" android:gravity="center" android:text="₹ 0" android:textColor="@color/success" android:textSize="21sp" android:textStyle="bold" android:background="@drawable/card"/>
+</LinearLayout>
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="Quick Actions" android:textColor="@color/rk_dark" android:textSize="20sp" android:textStyle="bold"/>
+<Button android:id="@+id/btnNewSale" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="10dp" android:text="＋  New Invoice / Sale" android:textColor="@color/white" android:background="@drawable/primary_button"/>
+<Button android:id="@+id/btnRepair" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="🔧  Repair Jobs" android:textColor="@color/rk_text" android:background="@drawable/card"/>
+<Button android:id="@+id/btnStock" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="📦  Stock" android:textColor="@color/rk_text" android:background="@drawable/card"/>
+<Button android:id="@+id/btnCustomers" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="👥  Customers" android:textColor="@color/rk_text" android:background="@drawable/card"/>
+<Button android:id="@+id/btnPending" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="8dp" android:text="💳  Pending Payments" android:textColor="@color/rk_text" android:background="@drawable/card"/>
+<Button android:id="@+id/btnMore" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="14dp" android:text="All Business Features  →" android:textColor="@color/rk_blue" android:background="@drawable/card"/>
+</LinearLayout></ScrollView>

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
-class InvoiceActivity : AppCompatActivity() {
+open class InvoiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_invoice)
@@ -24,12 +24,18 @@ class InvoiceActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter valid invoice details", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val id = db.createInvoice(
+
+            val total = (qty * rate - discount).coerceAtLeast(0.0)
+            if (paid < 0.0 || paid > total) {
+                Toast.makeText(this, "Paid amount must be between 0 and invoice total", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            db.saveInvoiceAndSync(
                 "RK-${System.currentTimeMillis()}",
-                null, customer, qty * rate, discount, paid, mode
+                customer, item, qty, rate, cost, discount, paid, mode
             )
-            db.addInvoiceItem(id, item, qty, rate, cost)
-            Toast.makeText(this, "Invoice saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Invoice saved • Stock/Sales/Pending updated", Toast.LENGTH_LONG).show()
             finish()
         }
     }

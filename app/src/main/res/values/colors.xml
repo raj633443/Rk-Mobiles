@@ -1,1 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><resources><color name="primary">#1565C0</color><color name="rk_blue">#1565C0</color><color name="rk_dark">#0D47A1</color><color name="white">#FFFFFF</color><color name="bg">#F4F6F9</color><color name="background">#F4F6F9</color><color name="profit">#168A45</color><color name="pending">#D32F2F</color></resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rk_blue">#2563EB</color>
+    <color name="rk_dark">#0F172A</color>
+    <color name="rk_text">#172033</color>
+    <color name="rk_muted">#64748B</color>
+    <color name="rk_bg">#F6F8FC</color>
+    <color name="bg">#F6F8FC</color>
+    <color name="background">#F6F8FC</color>
+    <color name="white">#FFFFFF</color>
+    <color name="card_stroke">#E2E8F0</color>
+    <color name="success">#16A34A</color>
+    <color name="warning">#D97706</color>
+    <color name="danger">#DC2626</color>
+    <color name="purple">#7C3AED</color>
+    <color name="cyan">#0891B2</color>
+    <color name="primary">#2563EB</color>
+    <color name="profit">#16A34A</color>
+    <color name="pending">#DC2626</color>
+</resources>

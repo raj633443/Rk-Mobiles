@@ -40,6 +40,12 @@ class CustomerLedgerActivity : AppCompatActivity() {
 
     private fun render(name: String) {
         list.removeAllViews()
+        val balance = db.customerBalance(name)
+        val balanceView = TextView(this)
+        balanceView.text = "Outstanding balance: Rs ${String.format("%.2f", balance)}"
+        balanceView.textSize = 17f
+        balanceView.setPadding(16, 16, 16, 16)
+        list.addView(balanceView)
         val rows = db.customerLedger(name)
 
         for (r in rows) {

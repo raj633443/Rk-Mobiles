@@ -1,37 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
-
-    <application
-        android:allowBackup="true"
-        android:label="RK Mobile"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
-        <activity android:name=".CustomerActivity"/>
-        <activity android:name=".InvoiceActivity"/>
-        <activity android:name=".InvoiceHistoryActivity"/>
-        <activity android:name=".CustomerLedgerActivity"/>
-        <activity android:name=".PurchaseActivity"/>
-        <activity android:name=".ImeiStockActivity"/>
-        <activity android:name=".StockReportActivity"/>
-        <activity android:name=".BackupActivity"/>
-        <activity android:name=".ProfitLossActivity"/>
-        <activity android:name=".ExpenseActivity"/>
-        <activity android:name=".SaleActivity"/>
-        <activity android:name=".PendingActivity"/>
-        <activity android:name=".RepairActivity"/>
-        <activity android:name=".StockActivity"/>
-        <activity android:name=".FeatureCenterActivity"/>
-        <activity android:name=".BusinessSettingsActivity"/>
-        <activity android:name=".BusinessReportsActivity"/>
-        <activity android:name=".MainActivity" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <receiver android:name=".ReminderReceiver" android:exported="false"/>
-    </application>
-</manifest>
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+<application android:allowBackup="true" android:label="RK Mobile" android:supportsRtl="true" android:theme="@style/AppTheme">
+<activity android:name=".MainActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity>
+<activity android:name=".InvoiceActivity"/><activity android:name=".InvoiceHistoryActivity"/><activity android:name=".CustomerActivity"/><activity android:name=".CustomerLedgerActivity"/>
+<activity android:name=".PurchaseActivity"/><activity android:name=".ImeiStockActivity"/><activity android:name=".StockReportActivity"/><activity android:name=".BackupActivity"/>
+<activity android:name=".FeatureCenterActivity"/><activity android:name=".BusinessSettingsActivity"/><activity android:name=".BusinessReportsActivity"/>
+<activity android:name=".RepairActivity"/><activity android:name=".PendingActivity"/><activity android:name=".StockActivity"/><activity android:name=".SaleActivity"/>
+<activity android:name=".ExpenseActivity"/><activity android:name=".ProfitLossActivity"/><receiver android:name=".ReminderReceiver" android:exported="false"/>
+</application></manifest>

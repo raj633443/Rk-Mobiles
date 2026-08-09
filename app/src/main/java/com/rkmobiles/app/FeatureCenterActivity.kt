@@ -5,20 +5,16 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
-class FeatureCenterActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feature_center)
-
-        findViewById<Button>(R.id.btnCreateInvoice).setOnClickListener { startActivity(Intent(this, InvoiceActivity::class.java)) }
-        findViewById<Button>(R.id.btnInvoiceHistory).setOnClickListener { startActivity(Intent(this, InvoiceHistoryActivity::class.java)) }
-        findViewById<Button>(R.id.btnCustomers).setOnClickListener { startActivity(Intent(this, CustomerActivity::class.java)) }
-        findViewById<Button>(R.id.btnLedger).setOnClickListener { startActivity(Intent(this, CustomerLedgerActivity::class.java)) }
-        findViewById<Button>(R.id.btnPurchase).setOnClickListener { startActivity(Intent(this, PurchaseActivity::class.java)) }
-        findViewById<Button>(R.id.btnImeiStock).setOnClickListener { startActivity(Intent(this, ImeiStockActivity::class.java)) }
-        findViewById<Button>(R.id.btnStockReport).setOnClickListener { startActivity(Intent(this, StockReportActivity::class.java)) }
-        findViewById<Button>(R.id.btnBackup).setOnClickListener { startActivity(Intent(this, BackupActivity::class.java)) }
-        findViewById<Button>(R.id.btnFeatureReports).setOnClickListener { startActivity(Intent(this, BusinessReportsActivity::class.java)) }
-        findViewById<Button>(R.id.btnFeatureSettings).setOnClickListener { startActivity(Intent(this, BusinessSettingsActivity::class.java)) }
-    }
+class FeatureCenterActivity:AppCompatActivity(){
+ override fun onCreate(b:Bundle?){super.onCreate(b);setContentView(R.layout.activity_feature_center)
+  go(R.id.btnCreateInvoice,InvoiceActivity::class.java);go(R.id.btnInvoiceHistory,InvoiceHistoryActivity::class.java)
+  go(R.id.btnCustomers,CustomerActivity::class.java);go(R.id.btnLedger,CustomerLedgerActivity::class.java)
+  go(R.id.btnPurchase,PurchaseActivity::class.java);go(R.id.btnImeiStock,ImeiStockActivity::class.java)
+  go(R.id.btnStockReport,StockReportActivity::class.java);go(R.id.btnFeatureReports,BusinessReportsActivity::class.java)
+  go(R.id.btnBackup,BackupActivity::class.java);go(R.id.btnFeatureSettings,BusinessSettingsActivity::class.java)
+  go(R.id.btnRepairs,RepairActivity::class.java);go(R.id.btnExpenses,ExpenseActivity::class.java)
+  go(R.id.btnProfitLoss,ProfitLossActivity::class.java);go(R.id.btnPending,PendingActivity::class.java)
+  go(R.id.btnStock,StockActivity::class.java)
+ }
+ private fun go(id:Int,c:Class<*>){findViewById<Button>(id).setOnClickListener{startActivity(Intent(this,c))}}
 }
