@@ -18,7 +18,8 @@ class RepairActivity:AppCompatActivity(){
   };render(db)
  }
  private fun render(db:DbHelper){val box=findViewById<LinearLayout>(R.id.repairList);box.removeAllViews()
- t.setBackgroundResource(R.drawable[...]  // Truncated line
+t.setBackgroundResource(R.drawable.card)
+box.addView(t,LinearLayout.LayoutParams(-1,-2).apply{setMargins(0,0,0,10)})
   }
  }
  private fun toast(s:String)=Toast.makeText(this,s,Toast.LENGTH_SHORT).show()
