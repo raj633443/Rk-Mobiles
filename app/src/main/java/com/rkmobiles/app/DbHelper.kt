@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", null, 4) {
+class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", null, 5) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE stock(id INTEGER PRIMARY KEY AUTOINCREMENT, model TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, sell REAL NOT NULL, brand TEXT DEFAULT '', imei TEXT DEFAULT '')")
@@ -17,6 +17,8 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
         db.execSQL("CREATE TABLE invoices(id INTEGER PRIMARY KEY AUTOINCREMENT, invoiceNo TEXT UNIQUE NOT NULL, customerId INTEGER, customerName TEXT, subtotal REAL NOT NULL, discount REAL NOT NULL DEFAULT 0, total REAL NOT NULL, paid REAL NOT NULL DEFAULT 0, paymentMode TEXT NOT NULL, created INTEGER NOT NULL)")
         db.execSQL("CREATE TABLE invoice_items(id INTEGER PRIMARY KEY AUTOINCREMENT, invoiceId INTEGER NOT NULL, description TEXT NOT NULL, qty INTEGER NOT NULL, rate REAL NOT NULL, cost REAL NOT NULL)")
         db.execSQL("CREATE TABLE purchases(id INTEGER PRIMARY KEY AUTOINCREMENT, supplier TEXT, item TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, imei TEXT DEFAULT '', created INTEGER NOT NULL)")
+        createExtraTables(db)
+        createIndexes(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -31,10 +33,57 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, "rk_mobiles.db", nu
             db.execSQL("CREATE TABLE purchases(id INTEGER PRIMARY KEY AUTOINCREMENT, supplier TEXT, item TEXT NOT NULL, qty INTEGER NOT NULL, buy REAL NOT NULL, imei TEXT DEFAULT '', created INTEGER NOT NULL)")
         }
         if (oldVersion < 4) {
-            db.execSQL("CREATE TABLE payments(id INTEGER PRIMARY KEY AUTOINCREMENT, customerId INTEGER, customerName TEXT NOT NULL, amount REAL NOT NULL, mode TEXT NOT NULL, note TEXT DEFAULT '', created INTEGER NOT NULL)")
-            db.execSQL("CREATE TABLE stock_moves(id INTEGER PRIMARY KEY AUTOINCREMENT, stockId INTEGER, type TEXT NOT NULL, qty INTEGER NOT NULL, reference TEXT DEFAULT '', created INTEGER NOT NULL)")
-            db.execSQL("CREATE TABLE firm_profile(id INTEGER PRIMARY KEY CHECK(id=1), name TEXT NOT NULL, phone TEXT DEFAULT '', address TEXT DEFAULT '', gstin TEXT DEFAULT '', invoicePrefix TEXT DEFAULT 'RK')")
+            createExtraTables(db)
         }
+
+        if (oldVersion < 5) {
+            createExtraTables(db)
+            createIndexes(db)
+        }
+    }
+
+
+    private fun createExtraTables(db: SQLiteDatabase) {
+        db.execSQL("""
+            CREATE TABLE IF NOT EXISTS payments(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                customerId INTEGER,
+                customerName TEXT NOT NULL,
+                amount REAL NOT NULL DEFAULT 0,
+                mode TEXT NOT NULL DEFAULT 'Cash',
+                note TEXT DEFAULT '',
+                created INTEGER NOT NULL
+            )
+        """.trimIndent())
+
+        db.execSQL("""
+            CREATE TABLE IF NOT EXISTS stock_moves(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                stockId INTEGER,
+                type TEXT NOT NULL,
+                qty INTEGER NOT NULL DEFAULT 0,
+                reference TEXT DEFAULT '',
+                created INTEGER NOT NULL
+            )
+        """.trimIndent())
+
+        db.execSQL("""
+            CREATE TABLE IF NOT EXISTS firm_profile(
+                id INTEGER PRIMARY KEY CHECK(id=1),
+                name TEXT NOT NULL DEFAULT 'RK Mobile',
+                phone TEXT DEFAULT '',
+                address TEXT DEFAULT '',
+                gstin TEXT DEFAULT '',
+                invoicePrefix TEXT DEFAULT 'RK'
+            )
+        """.trimIndent())
+    }
+
+    private fun createIndexes(db: SQLiteDatabase) {
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_pending_paid ON pending(paid)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_sales_created ON sales(created)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_expenses_created ON expenses(created)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_repairs_status ON repairs(status)")
     }
 
     fun insertStock(model: String, qty: Int, buy: Double, sell: Double, brand: String = "", imei: String = "") {

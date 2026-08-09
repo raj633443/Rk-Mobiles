@@ -20,7 +20,18 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnStock).setOnClickListener { startActivity(Intent(this,StockActivity::class.java)) }
         findViewById<Button>(R.id.btnCustomers).setOnClickListener { startActivity(Intent(this,CustomerActivity::class.java)) }
         findViewById<Button>(R.id.btnPending).setOnClickListener { startActivity(Intent(this,PendingActivity::class.java)) }
-        findViewById<Button>(R.id.btnMore).setOnClickListener { startActivity(Intent(this,FeatureCenterActivity::class.java)) }
+        findViewById<Button>(R.id.btnMore).setOnClickListener {
+            startActivity(Intent(this, FeatureCenterActivity::class.java))
+        }
+        findViewById<Button>(R.id.btnPurchase).setOnClickListener {
+            startActivity(Intent(this, PurchaseActivity::class.java))
+        }
+        findViewById<Button>(R.id.btnReports).setOnClickListener {
+            startActivity(Intent(this, BusinessReportsActivity::class.java))
+        }
+        findViewById<Button>(R.id.btnHistory).setOnClickListener {
+            startActivity(Intent(this, InvoiceHistoryActivity::class.java))
+        }
         refresh()
     }
 
@@ -34,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvPending).text="₹ ${money(db.pendingTotal())}"
         findViewById<TextView>(R.id.tvProfit).text="₹ ${money(profit)}"
         findViewById<TextView>(R.id.tvRepairs).text=db.repairCount().toString()
+        findViewById<TextView>(R.id.tvRepairCount).text=db.repairCount().toString()
     }
 
     private fun money(v:Double)=String.format("%,.2f",v)

@@ -11,18 +11,6 @@ class ExpenseActivity:AppCompatActivity(){
    if(d.isBlank()||a==null||a<0){toast("Enter valid expense");return@setOnClickListener};db.insertExpense(d,a);toast("Expense saved");render(db)
   }
  }
- private fun render(db:DbHelper){
-  val box=findViewById<LinearLayout>(R.id.expenseList)
-  box.removeAllViews()
-  db.expenseRows().forEach{r->
-    val t=TextView(this)
-    t.text="${r[1]}\n₹ ${r[2]}"
-    t.textSize=14f
-    t.setPadding(16,16,16,16)
-    t.setBackgroundResource(R.drawable.card_bg)
-    t.setTextColor(0xFF111827.toInt())
-    box.addView(t)
-  }
-}
+ private fun render(db:DbHelper){val box=findViewById<LinearLayout>(R.id.expenseList);box.removeAllViews();db.expenseRows().forEach{r->val t=TextView(this);t.text="${r[1]}\n₹ ${r[2]}";t.textSize=14f;t.setPadding(16,16,16,16);t.setBackgroundResource(R.drawable/card);box.addView(t,LinearLayout.LayoutParams(-1,-2).apply{setMargins(0,0,0,10)})}}
  private fun toast(s:String)=Toast.makeText(this,s,Toast.LENGTH_SHORT).show()
 }

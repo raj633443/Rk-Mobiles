@@ -17,12 +17,8 @@ class RepairActivity:AppCompatActivity(){
    db.insertRepair(c,p,m,issue,cost,charge);toast("Repair job added");render(db)
   };render(db)
  }
-   private fun render(db:DbHelper){
-    val box=findViewById<LinearLayout>(R.id.repairList)
-    box.removeAllViews()
-    val t=TextView(this)  // Create the missing TextView
-    t.setBackgroundResource(R.drawable.card)
-    box.addView(t,LinearLayout.LayoutParams(-1,-2).apply{setMargins(0,0,0,10)})
-  }
-  private fun toast(s:String)=Toast.makeText(this,s,Toast.LENGTH_SHORT).show()
+ private fun render(db:DbHelper){val box=findViewById<LinearLayout>(R.id.repairList);box.removeAllViews()
+  db.repairRows().forEach{r->val t=TextView(this);t.text="${r[1]} • ${r[3]}\n${r[4]}\nCharge ₹${r[6]}  •  ${r[7]}";t.textSize=14f;t.setPadding(16,16,16,16);t.setBackgroundResource(R.drawable/card);box.addView(t,LinearLayout.LayoutParams(-1,-2).apply{setMargins(0,0,0,10)})}
+ }
+ private fun toast(s:String)=Toast.makeText(this,s,Toast.LENGTH_SHORT).show()
 }
